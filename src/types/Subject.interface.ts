@@ -1,4 +1,4 @@
-import { Days } from '../utils/days';
+import { Days } from '../utils/Days';
 
 export interface Subject {
 	id: number;
