@@ -12,8 +12,21 @@ export default class GenerateSchedules {
 	rango: number;
 
 	valueInMinutesPerColumn: number;
+	daysThatCouldBeOccupied: {
+		[key: number]: string;
+	};
+	numberOfRows: number;
 	numberOfColumns: number;
 	scheduleMatrix: number[][];
+	days = {
+		Monday: 0,
+		Tuesday: 1,
+		Wednesday: 2,
+		Thursday: 3,
+		Friday: 4,
+		Saturday: 5,
+		Sunday: 6,
+	};
 
 	constructor(subjects: Subject[], valueInMinutesPerColumn = 30) {
 		this.subjects = subjects;
@@ -24,7 +37,11 @@ export default class GenerateSchedules {
 		this.rango = this.max - this.min;
 
 		this.valueInMinutesPerColumn = valueInMinutesPerColumn;
+		this.daysThatCouldBeOccupied = this.getDaysThatCouldBeOccupied();
+
+		this.numberOfRows = Object.keys(this.daysThatCouldBeOccupied).length;
 		this.numberOfColumns = this.getNumberOfColumns();
+
 		this.scheduleMatrix = this.generateScheduleMatrix();
 	}
 
@@ -71,7 +88,17 @@ export default class GenerateSchedules {
 		return (this.rango * 60) / this.valueInMinutesPerColumn;
 	}
 
+	getDaysThatCouldBeOccupied() {
+		const memorization: { [key: number]: string } = {};
+		this.allTimes.forEach((time) => {
+			if (time.day in memorization) return;
+			const indexDay = this.days[time.day];
+			memorization[indexDay] = time.day;
+		});
+		return memorization;
+	}
+
 	generateScheduleMatrix() {
-		return new Array(7).fill(new Array(this.numberOfColumns).fill(-1));
+		return new Array(this.numberOfRows).fill(new Array(this.numberOfColumns).fill(-1));
 	}
 }
