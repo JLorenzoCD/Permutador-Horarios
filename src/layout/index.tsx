@@ -17,8 +17,8 @@ function Layout() {
 	const createSchedules = () => {
 		const horarios = new GenerateSchedules(data);
 
-		console.log('La matiz que servira de base para crear todos los posibles horarios es => ', horarios.scheduleMatrix);
-		console.log('Los dias que van a ser posiblemente utilizados son =>', horarios.daysThatCouldBeOccupied);
+		const allPossibleSchedules = horarios.generateAllPossibleSchedules();
+		console.log(allPossibleSchedules);
 	};
 	return (
 		<>

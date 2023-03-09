@@ -1,5 +1,3 @@
-import { Days } from '../utils/Days';
-
 export interface Subject {
 	id: number;
 	subject: string;
@@ -13,7 +11,9 @@ export interface Schedule {
 }
 
 export interface TimeSchedule {
-	day: Days;
+	day: Day;
 	start: string;
 	end: string;
 }
+
+export type Day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
