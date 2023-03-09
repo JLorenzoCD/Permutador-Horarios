@@ -1,6 +1,6 @@
 import type { Subject } from '../types/Subject.interface';
 
-import { Days } from '../utils/days';
+import { Days } from '../utils/Days';
 
 // Ejempolo basico sobre una pestaña con sus respectivas materias y horarios de cursado
 export const subjectsExample: Subject[] = [
@@ -42,7 +42,7 @@ export const subjectsExample: Subject[] = [
 		subject: 'Literature',
 		possible_schedules: [
 			{
-				id: 1,
+				id: 4,
 				name: 'Comicion 1',
 				time: {
 					day: Days.MONDAY,
@@ -51,12 +51,36 @@ export const subjectsExample: Subject[] = [
 				},
 			},
 			{
-				id: 2,
+				id: 5,
 				name: 'Comicion 2',
 				time: {
 					day: Days.MONDAY,
 					start: '13:30',
 					end: '15:00',
+				},
+			},
+		],
+	},
+	{
+		id: 3,
+		subject: 'English',
+		possible_schedules: [
+			{
+				id: 6,
+				name: 'Comicion 1',
+				time: {
+					day: Days.MONDAY,
+					start: '10:30',
+					end: '12:00',
+				},
+			},
+			{
+				id: 7,
+				name: 'Comicion 2',
+				time: {
+					day: Days.TUESDAY,
+					start: '11:00',
+					end: '13:30',
 				},
 			},
 		],
