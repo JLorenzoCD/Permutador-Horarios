@@ -1,9 +1,9 @@
-import type { Subject } from '../types/Subject.interface';
+import type { ISubject } from '../types/Subject';
 
-import { Days } from '../utils/Days';
+import { Days } from '../utils/days';
 
 // Ejempolo basico sobre una pestaña con sus respectivas materias y horarios de cursado
-export const subjectsExample: Subject[] = [
+export const subjectsExample: ISubject[] = [
 	{
 		id: 1,
 		subject: 'Mathematics',

@@ -1,13 +1,9 @@
-import type { TimeSchedule, Subject, Day, Schedule } from '../types/Subject.interface';
+import type { ITimeSchedule, ISubject, ISchedule } from '../types/Subject';
 
-/*
-La idea es crear una matriz en la cual las filas sean "los dias" y las columnas "los posibles horarios", y una vez que el usuario coloque todos los datos sobre las materias y sus posibles horarios, recorrer cada uno para crear todos los posibles
-*/
-
-type Matrix = (number | string)[][];
+type IMatrix = (number | string)[][];
 export default class GenerateSchedules {
-	subjects: Subject[];
-	allTimes: TimeSchedule[] = [];
+	subjects: ISubject[];
+	allTimes: ITimeSchedule[] = [];
 	scheduleIds: number[] = [];
 
 	min = 24;
@@ -21,7 +17,7 @@ export default class GenerateSchedules {
 
 	numberOfRows: number = 0;
 	numberOfColumns: number = 0;
-	scheduleMatrix: Matrix;
+	scheduleMatrix: IMatrix;
 
 	days = {
 		Monday: 0,
@@ -33,7 +29,7 @@ export default class GenerateSchedules {
 		Sunday: 6,
 	};
 
-	constructor(subjects: Subject[], valueInMinutesPerColumn = 30) {
+	constructor(subjects: ISubject[], valueInMinutesPerColumn = 30) {
 		this.subjects = subjects;
 
 		this.setAllTimes();
@@ -49,7 +45,7 @@ export default class GenerateSchedules {
 	}
 
 	setAllTimes() {
-		let allTimes: TimeSchedule[] = [];
+		let allTimes: ITimeSchedule[] = [];
 		let scheduleIds: number[] = [];
 
 		this.subjects.forEach((subject) => {
@@ -62,6 +58,7 @@ export default class GenerateSchedules {
 		this.scheduleIds = scheduleIds;
 		this.allTimes = allTimes;
 	}
+
 	setMinAndMax() {
 		let min: number = 24,
 			max: number = 0;
@@ -120,12 +117,12 @@ export default class GenerateSchedules {
 		const subjects = [...this.subjects];
 
 		if (subjects.length === 0) return;
-		const zeroMatter = subjects.shift() as Subject;
+		const zeroMatter = subjects.shift() as ISubject;
 
-		const allPossibleSchedules: Matrix[] = [];
+		const allPossibleSchedules: IMatrix[] = [];
 
 		zeroMatter.possible_schedules.forEach((schedule) => {
-			const copyScheduleMatrix: Matrix = JSON.parse(JSON.stringify(this.scheduleMatrix));
+			const copyScheduleMatrix: IMatrix = JSON.parse(JSON.stringify(this.scheduleMatrix));
 
 			const { row, columEnd, columStart } = this.getThePositionOfScheduleInMatrix(schedule);
 
@@ -139,7 +136,8 @@ export default class GenerateSchedules {
 		});
 		return allPossibleSchedules;
 	}
-	private validateScheduleMatrix(scheduleMatrix: Matrix) {
+
+	private validateScheduleMatrix(scheduleMatrix: IMatrix) {
 		const ids: number[] = [];
 		scheduleMatrix.forEach((row) => {
 			row.forEach((colum) => {
@@ -186,19 +184,19 @@ export default class GenerateSchedules {
 		};
 	}
 
-	private getThePositionOfScheduleInMatrix(schedule: Schedule) {
+	private getThePositionOfScheduleInMatrix(schedule: ISchedule) {
 		const row = this.daysThatCouldBeOccupied[schedule.time.day];
 		const { columStart, columEnd } = this.getColumsTimeSchedule(schedule.time.start, schedule.time.end);
 
 		return { row, columStart, columEnd };
 	}
 
-	private completeMatrix(scheduleMatrix: Matrix, subjects: Subject[], allPossibleSchedules: Matrix[]) {
+	private completeMatrix(scheduleMatrix: IMatrix, subjects: ISubject[], allPossibleSchedules: IMatrix[]) {
 		const subject = subjects.shift();
 		if (!subject) return;
 
 		subject.possible_schedules.forEach((schedule) => {
-			const copyScheduleMatrix: Matrix = JSON.parse(JSON.stringify(scheduleMatrix));
+			const copyScheduleMatrix: IMatrix = JSON.parse(JSON.stringify(scheduleMatrix));
 
 			const { row, columEnd, columStart } = this.getThePositionOfScheduleInMatrix(schedule);
 
