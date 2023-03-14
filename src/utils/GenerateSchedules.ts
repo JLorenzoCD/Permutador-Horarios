@@ -1,6 +1,6 @@
 import type { ITimeSchedule, ISubject, ISchedule } from '../types/Subject';
 
-type IMatrix = (number | string)[][];
+export type IMatrix = (number | string)[][];
 export default class GenerateSchedules {
 	subjects: ISubject[];
 	allTimes: ITimeSchedule[] = [];
@@ -94,9 +94,20 @@ export default class GenerateSchedules {
 
 		this.allTimes.forEach((time) => {
 			if (time.day in memorization) return;
-			const indexDay = this.days[time.day];
-			memorization[time.day] = indexDay;
+			const valueDay = this.days[time.day];
+			memorization[time.day] = valueDay;
 		});
+
+		// Estableciendo el indice que va a ocupar cierto dia en la matriz
+		const arrIndexDay = Object.values(memorization);
+		arrIndexDay.sort();
+
+		for (const day in memorization) {
+			const valueDay = memorization[day];
+			const indexDay = arrIndexDay.findIndex((value) => valueDay === value);
+			memorization[day] = indexDay;
+		}
+
 		this.daysThatCouldBeOccupied = { ...memorization };
 	}
 
@@ -113,7 +124,7 @@ export default class GenerateSchedules {
 		return new Array(this.numberOfRows).fill(new Array(this.numberOfColumns).fill(-1));
 	}
 
-	generateAllPossibleSchedules() {
+	private generateAllPossibleSchedules() {
 		const subjects = [...this.subjects];
 
 		if (subjects.length === 0) return;
@@ -214,5 +225,14 @@ export default class GenerateSchedules {
 			// Seguir completando la scheduleMatrix con las demas materias
 			this.completeMatrix(copyScheduleMatrix, subjects, allPossibleSchedules);
 		});
+	}
+
+	getAllPossibleSchedules() {
+		const allPossibleSchedules = this.generateAllPossibleSchedules();
+
+		// TODO: Recorrer cada posible horario y crear un nuevo array con 7 elementos, en el cual los dias ocupados se le coloquen su array de horarios y los que no se le pondra como valor un null
+		// Este metodo debe debolver un array cuyos elementos sean un array o null
+
+		return allPossibleSchedules;
 	}
 }
