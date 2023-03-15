@@ -1,6 +1,8 @@
-import type { ITimeSchedule, ISubject, ISchedule } from '../types/Subject';
+import type { ITimeSchedule, ISubject, ISchedule, IDay } from '../types/Subject';
 
 export type IMatrix = (number | string)[][];
+export type IPossibleSchedule = ((number | string)[] | null)[];
+
 export default class GenerateSchedules {
 	subjects: ISubject[];
 	allTimes: ITimeSchedule[] = [];
@@ -127,7 +129,10 @@ export default class GenerateSchedules {
 	private generateAllPossibleSchedules() {
 		const subjects = [...this.subjects];
 
-		if (subjects.length === 0) return;
+		if (subjects.length === 0) {
+			throw new Error('There is no subject');
+		}
+
 		const zeroMatter = subjects.shift() as ISubject;
 
 		const allPossibleSchedules: IMatrix[] = [];
@@ -228,11 +233,30 @@ export default class GenerateSchedules {
 	}
 
 	getAllPossibleSchedules() {
+		// Generando los posibles horarios
 		const allPossibleSchedules = this.generateAllPossibleSchedules();
 
-		// TODO: Recorrer cada posible horario y crear un nuevo array con 7 elementos, en el cual los dias ocupados se le coloquen su array de horarios y los que no se le pondra como valor un null
-		// Este metodo debe debolver un array cuyos elementos sean un array o null
+		// Retornando una modificacion de allPossibleSchedules, en el cual sus elementos ya no son IMatrix, sino IPossibleSchedule
+		return allPossibleSchedules.map((scheduleMatrix) => {
+			let newPossibleSchedule: IPossibleSchedule = new Array(7);
 
-		return allPossibleSchedules;
+			// Rellenando el nuevo array
+			for (const day in this.days) {
+				const indexDay = this.daysThatCouldBeOccupied[day];
+				const valueDay = this.days[day as IDay];
+
+				if (indexDay !== undefined) {
+					const matrix = scheduleMatrix[indexDay];
+
+					// Si todos los elementos del array son -1 se retorna un null, ya que no hay ninguna materia en ese dia en este horario generado
+
+					newPossibleSchedule[valueDay] = matrix.every((value) => value === -1) ? null : scheduleMatrix[indexDay];
+				} else {
+					newPossibleSchedule[valueDay] = null;
+				}
+			}
+
+			return newPossibleSchedule;
+		});
 	}
 }
