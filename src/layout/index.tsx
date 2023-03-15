@@ -1,12 +1,17 @@
 import { useState } from 'react';
 
-import type { ChangeEvent } from 'react';
-
 import { subjectsExample } from './../data';
 import GenerateSchedules from '../utils/GenerateSchedules';
 
+import Subject from '../components/Subject';
+import PossibleSchedules from '../components/PossibleSchedules';
+
+import type { ChangeEvent } from 'react';
+
 function Layout() {
 	const [time, setTime] = useState('08:30');
+
+	const [possibleSchedules, setPossibleSchedules] = useState<null | GenerateSchedules>(null);
 
 	const data = [...subjectsExample];
 
@@ -15,10 +20,13 @@ function Layout() {
 	};
 
 	const createSchedules = () => {
-		const horarios = new GenerateSchedules(data);
+		setPossibleSchedules(null);
 
-		const allPossibleSchedules = horarios.generateAllPossibleSchedules();
-		console.log(allPossibleSchedules);
+		if (!!data) {
+			const horarios = new GenerateSchedules(data);
+
+			setPossibleSchedules(horarios);
+		}
 	};
 	return (
 		<>
@@ -29,23 +37,13 @@ function Layout() {
 				<label>
 					<input type='time' onChange={handleChangeInputTime} value={time} />
 				</label>
-
 				<br />
 				{data && (
 					<>
 						<h2 className='text-3xl font-bold'>Tus materias y sus posibles horarios:</h2>
 						<ul>
 							{data.map((subject) => (
-								<li key={subject.id} className='mb-5'>
-									<h3 className='text-2xl'>{subject.subject}</h3>
-									<ul>
-										{subject.possible_schedules.map((schedule) => (
-											<li key={schedule.id}>
-												{schedule.name} - {schedule.time.day} - {schedule.time.start} to {schedule.time.end}
-											</li>
-										))}
-									</ul>
-								</li>
+								<Subject data={subject} key={subject.id} />
 							))}
 						</ul>
 					</>
@@ -56,7 +54,13 @@ function Layout() {
 					</button>
 				</div>
 			</main>
-			<footer></footer>
+			<footer>
+				{possibleSchedules && (
+					<>
+						<PossibleSchedules data={possibleSchedules} />
+					</>
+				)}
+			</footer>
 		</>
 	);
 }
