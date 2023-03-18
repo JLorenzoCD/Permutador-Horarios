@@ -261,20 +261,20 @@ export default class GenerateSchedules {
 	}
 
 	getTimeColumnInStringFormat() {
-		const timeCol: string[] = new Array(this.numberOfColumns).fill('');
+		const hoursArr: string[] = new Array(this.numberOfColumns).fill('');
 
 		const date = new Date();
 		date.setHours(this.min, 0, 0);
 
-		for (let i = 0; i < timeCol.length; i++) {
-			date.setMinutes(date.getMinutes() + this.valueInMinutesPerColumn);
-
+		for (let i = 0; i < hoursArr.length; i++) {
 			const time = date.toLocaleTimeString().split(':');
 			time.pop();
 
-			timeCol[i] = time.join(':');
+			hoursArr[i] = time.join(':');
+
+			date.setMinutes(date.getMinutes() + this.valueInMinutesPerColumn);
 		}
 
-		return timeCol;
+		return hoursArr;
 	}
 }
