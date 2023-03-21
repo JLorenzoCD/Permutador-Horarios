@@ -35,12 +35,22 @@ function PossibleSchedules({ data }: Props) {
 
 	return (
 		<div>
-			<h1>
-				Posibles Horarios
-				{allPossibleSchedules.map((possibleSchedule, i) => (
-					<Schedule data={possibleSchedule} key={i} hoursArr={hoursArr} subjects={subjects} />
-				))}
-			</h1>
+			{allPossibleSchedules.length !== 0 ? (
+				<>
+					<h2 className='text-3xl font-bold underline'>
+						{allPossibleSchedules.length} possible schedules have been generated
+					</h2>
+					{allPossibleSchedules.map((possibleSchedule, i) => (
+						<Schedule data={possibleSchedule} key={i} hoursArr={hoursArr} subjects={subjects} />
+					))}
+				</>
+			) : (
+				<>
+					<h2 className='text-3xl font-bold underline'>
+						With the subjects and commissions given, no schedule could be generated
+					</h2>
+				</>
+			)}
 		</div>
 	);
 }
