@@ -208,7 +208,8 @@ export default class GenerateSchedules {
 	}
 
 	private completeMatrix(scheduleMatrix: IMatrix, subjects: ISubject[], allPossibleSchedules: IMatrix[]) {
-		const subject = subjects.shift();
+		const copySubjects = [...subjects];
+		const subject = copySubjects.shift();
 		if (!subject) return;
 
 		subject.possible_schedules.forEach((schedule) => {
@@ -220,15 +221,14 @@ export default class GenerateSchedules {
 				copyScheduleMatrix[row][i] = `${subject.id}-${schedule.id}`;
 			}
 
-			if (subjects.length === 0) {
+			if (copySubjects.length === 0) {
 				// Corroborar que de que esten todos los ids de las materias en copyScheduleMatrix de scheduleIds
 				const isValid = this.validateScheduleMatrix(copyScheduleMatrix);
-				if (isValid) allPossibleSchedules.push(copyScheduleMatrix);
-				return;
+				if (isValid) allPossibleSchedules.push(JSON.parse(JSON.stringify(copyScheduleMatrix)));
 			}
 
 			// Seguir completando la scheduleMatrix con las demas materias
-			this.completeMatrix(copyScheduleMatrix, subjects, allPossibleSchedules);
+			this.completeMatrix(copyScheduleMatrix, copySubjects, allPossibleSchedules);
 		});
 	}
 
