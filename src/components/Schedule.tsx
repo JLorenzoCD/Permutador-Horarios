@@ -65,7 +65,7 @@ function ScheduleBase({ children, hoursArr }: PropsScheduleBase) {
 				{/* Horarios */}
 				<ul className='w-28 pt-12 border-x-2'>
 					{hoursArr.map((hora) => (
-						<li key={hora} className='text-center p-1 border-t-2'>
+						<li key={hora} className='text-center p-1 border-t-2 h-8'>
 							{hora}
 						</li>
 					))}
