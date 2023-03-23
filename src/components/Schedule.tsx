@@ -60,7 +60,7 @@ interface PropsScheduleBase {
 }
 function ScheduleBase({ children, hoursArr }: PropsScheduleBase) {
 	return (
-		<section className='overflow-x-auto'>
+		<section className='overflow-x-auto mb-10'>
 			<div className='flex border-2 mx-2' style={{ width: 900 }}>
 				{/* Horarios */}
 				<ul className='w-28 pt-12 border-x-2'>

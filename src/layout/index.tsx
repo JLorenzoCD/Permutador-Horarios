@@ -7,6 +7,7 @@ import Subject from '../components/Subject';
 import PossibleSchedules from '../components/PossibleSchedules';
 
 import type { ChangeEvent } from 'react';
+import Container from '../components/Container';
 
 function Layout() {
 	const [time, setTime] = useState('08:30');
@@ -29,10 +30,11 @@ function Layout() {
 		}
 	};
 	return (
-		<>
+		<Container>
 			<header>
 				<h1 className='text-3xl font-bold underline'>Aplicacion horarios</h1>
 			</header>
+
 			<main>
 				<label>
 					<input type='time' onChange={handleChangeInputTime} value={time} />
@@ -53,15 +55,16 @@ function Layout() {
 						Generar horarios
 					</button>
 				</div>
+
+				<section>
+					{possibleSchedules && (
+						<>
+							<PossibleSchedules data={possibleSchedules} />
+						</>
+					)}
+				</section>
 			</main>
-			<footer>
-				{possibleSchedules && (
-					<>
-						<PossibleSchedules data={possibleSchedules} />
-					</>
-				)}
-			</footer>
-		</>
+		</Container>
 	);
 }
 

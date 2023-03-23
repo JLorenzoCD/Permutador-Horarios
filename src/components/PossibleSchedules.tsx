@@ -37,7 +37,7 @@ function PossibleSchedules({ data }: Props) {
 		<div>
 			{allPossibleSchedules.length !== 0 ? (
 				<>
-					<h2 className='text-3xl font-bold underline'>
+					<h2 className='text-3xl font-bold underline mb-5'>
 						{allPossibleSchedules.length} possible schedules have been generated
 					</h2>
 					{allPossibleSchedules.map((possibleSchedule, i) => (
