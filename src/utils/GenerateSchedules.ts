@@ -213,11 +213,16 @@ export default class GenerateSchedules {
 		if (!subject) return;
 
 		subject.possible_schedules.forEach((schedule) => {
-			const copyScheduleMatrix: IMatrix = JSON.parse(JSON.stringify(scheduleMatrix));
+			let copyScheduleMatrix: IMatrix = JSON.parse(JSON.stringify(scheduleMatrix));
 
 			const { row, columEnd, columStart } = this.getThePositionOfScheduleInMatrix(schedule);
 
 			for (let i = columStart; i <= columEnd; i++) {
+				// Evitar que se sobre escriba parte del horario e invalidando el acutal scheduleMatrix
+				if (copyScheduleMatrix[row][i] !== -1) {
+					copyScheduleMatrix = [];
+					break;
+				}
 				copyScheduleMatrix[row][i] = `${subject.id}-${schedule.id}`;
 			}
 
