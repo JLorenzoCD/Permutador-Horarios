@@ -208,7 +208,7 @@ export default class GenerateSchedules {
 	}
 
 	private completeMatrix(scheduleMatrix: IMatrix, subjects: ISubject[], allPossibleSchedules: IMatrix[]) {
-		const copySubjects = [...subjects];
+		let copySubjects = [...subjects];
 		const subject = copySubjects.shift();
 		if (!subject) return;
 
@@ -221,6 +221,7 @@ export default class GenerateSchedules {
 				// Evitar que se sobre escriba parte del horario e invalidando el acutal scheduleMatrix
 				if (copyScheduleMatrix[row][i] !== -1) {
 					copyScheduleMatrix = [];
+					copySubjects = []
 					break;
 				}
 				copyScheduleMatrix[row][i] = `${subject.id}-${schedule.id}`;
