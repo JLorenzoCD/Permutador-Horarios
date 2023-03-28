@@ -2,7 +2,7 @@ export interface ISubject {
 	id: number;
 	subject: string;
 	possible_schedules: ISchedule[];
-	rgbColor?: string;
+	hexColor?: string;
 }
 
 export interface ISchedule {

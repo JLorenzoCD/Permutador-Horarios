@@ -1,3 +1,4 @@
+import generateRandomColor from '../utils/generateRandomColor';
 import GenerateSchedules, { IPossibleSchedule } from '../utils/GenerateSchedules';
 import Schedule from './Schedule';
 
@@ -18,18 +19,8 @@ function PossibleSchedules({ data }: Props) {
 	}
 	const hoursArr = data.getTimeColumnInStringFormat();
 
-	const generateRandomColor = () => {
-		const r = Math.floor(Math.random() * 256);
-		const g = Math.floor(Math.random() * 256);
-		const b = Math.floor(Math.random() * 256);
-
-		const rgbColor = `rgb(${r},${g},${b})`;
-
-		return rgbColor;
-	};
-
 	const subjects = data.subjects.map((subject) => {
-		subject.rgbColor = generateRandomColor();
+		subject.hexColor = generateRandomColor();
 		return subject;
 	});
 

@@ -13,7 +13,7 @@ function Schedule({ data, hoursArr, subjects }: PropsSchedule) {
 		if (typeof e == 'number') return '';
 
 		const subject = subjects.find((subject) => subject.id === parseInt(e.split('-')[0]));
-		return subject?.rgbColor as string;
+		return subject?.hexColor as string;
 	};
 
 	const title = (e: string) => {
