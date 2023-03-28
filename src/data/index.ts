@@ -1,4 +1,4 @@
-import type { ISubject } from '../types/Subject';
+import type { ISchedule, ISubject } from '../types/Subject';
 
 import { Days } from '../utils/days';
 
@@ -86,3 +86,19 @@ export const subjectsExample: ISubject[] = [
 		],
 	},
 ];
+
+export const defaultSubject: ISubject = {
+	id: 0,
+	subject: '',
+	possible_schedules: [],
+};
+
+export const defaultSchedule: ISchedule = {
+	id: 0,
+	name: '',
+	time: {
+		day: Days.MONDAY,
+		start: '08:00',
+		end: '10:00',
+	},
+};
