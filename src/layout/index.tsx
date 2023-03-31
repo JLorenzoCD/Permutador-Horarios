@@ -10,7 +10,7 @@ import Subject from '../components/Subject';
 import PossibleSchedules from '../components/PossibleSchedules';
 
 import type { ChangeEvent, FormEvent } from 'react';
-import { Days } from '../utils/days';
+import { Days } from '../utils/Days';
 
 function Layout() {
 	const [subjects, setSubjects] = useState([...subjectsExample]);
