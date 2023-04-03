@@ -1,22 +1,18 @@
 import { useState } from 'react';
 
-import { defaultSchedule, defaultSubject, subjectsExample } from './../data';
+import { subjectsExample } from './../data';
 import GenerateSchedules from '../utils/GenerateSchedules';
-import generateRandomColor from '../utils/generateRandomColor';
 
 import Container from '../components/Container';
 import Button from '../components/Button';
 import Subject from '../components/Subject';
 import PossibleSchedules from '../components/PossibleSchedules';
+import FormSubjects from '../components/FormSubjects';
 
-import type { ChangeEvent, FormEvent } from 'react';
-import { Days } from '../utils/Days';
+import { ISchedule, ISubject } from '../types/Subject';
 
 function Layout() {
 	const [subjects, setSubjects] = useState([...subjectsExample]);
-
-	const [subject, setSubject] = useState({ ...defaultSubject, hexColor: generateRandomColor() });
-	const [schedule, setSchedule] = useState({ ...defaultSchedule, subject: subjects[0].subject ?? '' });
 
 	const [possibleSchedules, setPossibleSchedules] = useState<null | GenerateSchedules>(null);
 
@@ -34,80 +30,9 @@ function Layout() {
 		setPossibleSchedules(null);
 	};
 
-	const handleChangeSubject = (e: ChangeEvent<HTMLInputElement>) => {
-		setSubject((prevState) => {
-			return { ...prevState, [e.target.name]: e.target.value };
-		});
-	};
-
-	const handleChangeSchedule = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		if (e.target.name === 'name' || e.target.name === 'subject') {
-			setSchedule((prevState) => {
-				return { ...prevState, [e.target.name]: e.target.value };
-			});
-		} else {
-			setSchedule((prevState) => {
-				return { ...prevState, time: { ...prevState.time, [e.target.name]: e.target.value } };
-			});
-		}
-	};
-
-	const handleSubmitSubject = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (subject.subject.trim() === '') {
-			alert('No es posible una materia sin nombre');
-			return;
-		}
-		const nombreOcupado = subjects.some(
-			(subjectSave) => subjectSave.subject.trim().toUpperCase() === subject.subject.trim().toUpperCase()
-		);
-		if (nombreOcupado) {
-			alert('No es posible repetir el mismo nombre para una materia');
-			return;
-		}
-		const newSubject = {
-			id: new Date().getTime(),
-			subject: subject.subject,
-			possible_schedules: [],
-			hexColor: subject.hexColor,
-		};
-
-		setSubjects((prevState) => [...prevState, newSubject]);
-		setSubject({ ...defaultSubject, hexColor: generateRandomColor() });
-	};
-
-	const handleSubmitSchedule = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		if (schedule.name.trim() === '') {
-			alert('No es posible una materia sin nombre');
-			return;
-		}
-
-		const subjectSave = subjects.find((subject) => subject.subject === schedule.subject);
-
-		if (!subjectSave) {
-			alert('Error al buscar en materias');
-			return;
-		}
-
-		const nombreOcupado = subjectSave.possible_schedules.some(
-			(scheduleSave) => scheduleSave.name.trim().toUpperCase() === schedule.name.trim().toUpperCase()
-		);
-		if (nombreOcupado) {
-			alert('No es posible repetir el mismo nombre para un orario en la misma materia');
-			return;
-		}
-
-		const newSchedule = {
-			id: new Date().getTime(),
-			name: schedule.name,
-			time: { ...schedule.time }, // TODO: Tengo que revisar que el horairo de finalizacion no sea menor a el horarios de comienzo
-		};
-
+	const addSchedule = (subjectId: number, newSchedule: ISchedule) => {
 		setSubjects((prevState) => {
-			const subjectSave = prevState.find((subject) => subject.subject === schedule.subject);
+			const subjectSave = prevState.find((subject) => subject.id === subjectId);
 
 			const existeEnSubjects = subjectSave?.possible_schedules.some(
 				(scheduleSave) => scheduleSave.id === newSchedule.id
@@ -122,6 +47,9 @@ function Layout() {
 			return [...prevState];
 		});
 	};
+	const addSubject = (newSubject: ISubject) => {
+		setSubjects((prevState) => [...prevState, newSubject]);
+	};
 
 	return (
 		<Container>
@@ -130,92 +58,7 @@ function Layout() {
 			</header>
 
 			<main>
-				<form onSubmit={handleSubmitSubject}>
-					<h2 className='text-2xl'>Create new Subject</h2>
-					<label className='block'>
-						Subject:
-						<input
-							className='border ml-2'
-							type='text'
-							value={subject.subject}
-							name='subject'
-							onChange={handleChangeSubject}
-						/>
-					</label>
-					<label className='block'>
-						Color
-						<input
-							type='color'
-							name='hexColor'
-							className='ml-2'
-							value={subject.hexColor}
-							onChange={handleChangeSubject}
-						/>
-					</label>
-					<Button type='submit'>Crear</Button>
-				</form>
-				<br />
-
-				<form onSubmit={handleSubmitSchedule}>
-					<h2 className='text-2xl'>Create new Schedule</h2>
-
-					<label className='block'>
-						Select Subject
-						<select name='subject' value={schedule.subject} onChange={handleChangeSchedule} className='border ml-2'>
-							{subjects &&
-								subjects.map((subject) => (
-									<option key={subject.id} value={subject.subject}>
-										{subject.subject}
-									</option>
-								))}
-						</select>
-					</label>
-
-					<label className='block'>
-						Schedule
-						<input
-							type='text'
-							name='name'
-							className='border ml-2'
-							value={schedule.name}
-							onChange={handleChangeSchedule}
-						/>
-					</label>
-					<label className='block'>
-						Select day
-						<select name='day' value={schedule.time.day} onChange={handleChangeSchedule} className='border ml-2'>
-							<option value={Days.MONDAY}>{Days.MONDAY}</option>
-							<option value={Days.TUESDAY}>{Days.TUESDAY}</option>
-							<option value={Days.WEDNESDAY}>{Days.WEDNESDAY}</option>
-							<option value={Days.THURSDAY}>{Days.THURSDAY}</option>
-							<option value={Days.FRIDAY}>{Days.FRIDAY}</option>
-							<option value={Days.SATURDAY}>{Days.SATURDAY}</option>
-							<option value={Days.SUNDAY}>{Days.SUNDAY}</option>
-						</select>
-					</label>
-					<label className='block'>
-						Hora de comienzo
-						<input
-							type='time'
-							name='start'
-							onChange={handleChangeSchedule}
-							value={schedule.time.start}
-							className='border ml-2'
-						/>
-					</label>
-					<label className='block'>
-						Hora de finalizacion
-						<input
-							type='time'
-							name='end'
-							onChange={handleChangeSchedule}
-							value={schedule.time.end}
-							className='border ml-2'
-						/>
-					</label>
-
-					<Button type='submit'>Crear</Button>
-				</form>
+				<FormSubjects subjects={subjects} addSchedule={addSchedule} addSubject={addSubject} />
 				<br />
 				{subjects && (
 					<>
