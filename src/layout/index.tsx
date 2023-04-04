@@ -1,7 +1,4 @@
-import { useState } from 'react';
-
-import { subjectsExample } from './../data';
-import GenerateSchedules from '../utils/GenerateSchedules';
+import LayoutUtils from './../utils/components/Layout';
 
 import Container from '../components/Container';
 import Button from '../components/Button';
@@ -9,47 +6,9 @@ import Subject from '../components/Subject';
 import PossibleSchedules from '../components/PossibleSchedules';
 import FormSubjects from '../components/FormSubjects';
 
-import { ISchedule, ISubject } from '../types/Subject';
-
 function Layout() {
-	const [subjects, setSubjects] = useState([...subjectsExample]);
-
-	const [possibleSchedules, setPossibleSchedules] = useState<null | GenerateSchedules>(null);
-
-	const createSchedules = () => {
-		setPossibleSchedules(null);
-
-		if (!!subjects) {
-			const horarios = new GenerateSchedules(subjects);
-
-			setPossibleSchedules(horarios);
-		}
-	};
-
-	const clearSchedules = () => {
-		setPossibleSchedules(null);
-	};
-
-	const addSchedule = (subjectId: number, newSchedule: ISchedule) => {
-		setSubjects((prevState) => {
-			const subjectSave = prevState.find((subject) => subject.id === subjectId);
-
-			const existeEnSubjects = subjectSave?.possible_schedules.some(
-				(scheduleSave) => scheduleSave.id === newSchedule.id
-			);
-
-			if (existeEnSubjects) {
-				return [...prevState];
-			}
-
-			subjectSave?.possible_schedules.push(newSchedule);
-
-			return [...prevState];
-		});
-	};
-	const addSubject = (newSubject: ISubject) => {
-		setSubjects((prevState) => [...prevState, newSubject]);
-	};
+	const { subjects, possibleSchedules, createPossibleSchedules, clearPossibleSchedules, addSubject, addSchedule } =
+		LayoutUtils();
 
 	return (
 		<Container>
@@ -71,10 +30,10 @@ function Layout() {
 					</>
 				)}
 				<div className='mt-5'>
-					<Button type='button' color='green' onClick={createSchedules}>
+					<Button type='button' color='green' onClick={createPossibleSchedules}>
 						Generar horarios
 					</Button>
-					<Button type='button' theme='outline' color='purple' onClick={clearSchedules}>
+					<Button type='button' theme='outline' color='purple' onClick={clearPossibleSchedules}>
 						Limpiar horarios
 					</Button>
 				</div>
