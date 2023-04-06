@@ -10,7 +10,12 @@ function Subject({ data }: Props) {
 			<ul>
 				{data.possible_schedules.map((schedule) => (
 					<li key={schedule.id}>
-						{schedule.name} - {schedule.time.day} - {schedule.time.start} to {schedule.time.end}
+						{schedule.name} -{' '}
+						{schedule.time.map((time) => (
+							<span className='ml-5'>
+								{time.day} - {time.start} to {time.end}
+							</span>
+						))}
 					</li>
 				))}
 			</ul>

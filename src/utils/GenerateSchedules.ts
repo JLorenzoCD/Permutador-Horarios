@@ -53,7 +53,7 @@ export default class GenerateSchedules {
 		this.subjects.forEach((subject) => {
 			scheduleIds.push(subject.id);
 			subject.possible_schedules.forEach((schedule) => {
-				allTimes.push(schedule.time);
+				schedule.time.forEach((time) => allTimes.push(time));
 			});
 		});
 
@@ -140,11 +140,15 @@ export default class GenerateSchedules {
 		zeroMatter.possible_schedules.forEach((schedule) => {
 			const copyScheduleMatrix: IMatrix = JSON.parse(JSON.stringify(this.scheduleMatrix));
 
-			const { row, columEnd, columStart } = this.getThePositionOfScheduleInMatrix(schedule);
+			const allTimesOfSchedule = this.getThePositionOfScheduleInMatrix(schedule);
 
-			for (let i = columStart; i <= columEnd; i++) {
-				copyScheduleMatrix[row][i] = `${zeroMatter.id}-${schedule.id}`;
-			}
+			allTimesOfSchedule.forEach((timeOfSchedule) => {
+				const { row, columStart, columEnd } = timeOfSchedule;
+
+				for (let i = columStart; i <= columEnd; i++) {
+					copyScheduleMatrix[row][i] = `${zeroMatter.id}-${schedule.id}`;
+				}
+			});
 
 			// Recorrer cada una de las otras materias
 			const subjectsToCover = [...subjects];
@@ -201,10 +205,14 @@ export default class GenerateSchedules {
 	}
 
 	private getThePositionOfScheduleInMatrix(schedule: ISchedule) {
-		const row = this.daysThatCouldBeOccupied[schedule.time.day];
-		const { columStart, columEnd } = this.getColumsTimeSchedule(schedule.time.start, schedule.time.end);
+		let allTimesOfSchedule: { row: number; columStart: number; columEnd: number }[] = [];
+		schedule.time.forEach((time) => {
+			const row = this.daysThatCouldBeOccupied[time.day];
+			const { columStart, columEnd } = this.getColumsTimeSchedule(time.start, time.end);
+			allTimesOfSchedule.push({ row, columStart, columEnd });
+		});
 
-		return { row, columStart, columEnd };
+		return allTimesOfSchedule;
 	}
 
 	private completeMatrix(scheduleMatrix: IMatrix, subjects: ISubject[], allPossibleSchedules: IMatrix[]) {
@@ -215,17 +223,21 @@ export default class GenerateSchedules {
 		subject.possible_schedules.forEach((schedule) => {
 			let copyScheduleMatrix: IMatrix = JSON.parse(JSON.stringify(scheduleMatrix));
 
-			const { row, columEnd, columStart } = this.getThePositionOfScheduleInMatrix(schedule);
+			const allTimesOfSchedule = this.getThePositionOfScheduleInMatrix(schedule);
 
-			for (let i = columStart; i <= columEnd; i++) {
-				// Evitar que se sobre escriba parte del horario e invalidando el acutal scheduleMatrix
-				if (copyScheduleMatrix[row][i] !== -1) {
-					copyScheduleMatrix = [];
-					copySubjects = []
-					break;
+			allTimesOfSchedule.forEach((timeOfSchedule) => {
+				const { row, columStart, columEnd } = timeOfSchedule;
+
+				for (let i = columStart; i <= columEnd; i++) {
+					// Evitar que se sobre escriba parte del horario e invalidando el acutal scheduleMatrix
+					if (copyScheduleMatrix[row][i] !== -1) {
+						copyScheduleMatrix = [];
+						copySubjects = [];
+						break;
+					}
+					copyScheduleMatrix[row][i] = `${subject.id}-${schedule.id}`;
 				}
-				copyScheduleMatrix[row][i] = `${subject.id}-${schedule.id}`;
-			}
+			});
 
 			if (copySubjects.length === 0) {
 				// Corroborar que de que esten todos los ids de las materias en copyScheduleMatrix de scheduleIds

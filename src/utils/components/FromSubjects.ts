@@ -82,7 +82,7 @@ function FromSubjects(subjects: ISubject[]) {
 			const newSchedule = {
 				id: new Date().getTime(),
 				name: schedule.name,
-				time: { ...schedule.time }, // TODO: Tengo que revisar que el horairo de finalizacion no sea menor a el horarios de comienzo
+				time: [...schedule.time], // TODO: Tengo que revisar que el horairo de finalizacion no sea menor a el horarios de comienzo
 			};
 
 			addSchedule(Number(schedule.subjectId), newSchedule);

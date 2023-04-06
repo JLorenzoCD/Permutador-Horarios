@@ -15,6 +15,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 	const { subject, schedule, handleChangeSubject, handleChangeSchedule, createSubject, createSchedule } =
 		FromSubjectsUtils(subjects);
 
+	// ! Se coloco como por defecto el time[0], luego tengo que revisar y correguir para buscar una forma de que esten todos los time del array
 	return (
 		<div>
 			<form onSubmit={createSubject(addSubject)}>
@@ -70,7 +71,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 				</label>
 				<label className='block'>
 					Select day
-					<select name='day' value={schedule.time.day} onChange={handleChangeSchedule} className='border ml-2'>
+					<select name='day' value={schedule.time[0].day} onChange={handleChangeSchedule} className='border ml-2'>
 						<option value={Days.MONDAY}>{Days.MONDAY}</option>
 						<option value={Days.TUESDAY}>{Days.TUESDAY}</option>
 						<option value={Days.WEDNESDAY}>{Days.WEDNESDAY}</option>
@@ -86,7 +87,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 						type='time'
 						name='start'
 						onChange={handleChangeSchedule}
-						value={schedule.time.start}
+						value={schedule.time[0].start}
 						className='border ml-2'
 					/>
 				</label>
@@ -96,7 +97,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 						type='time'
 						name='end'
 						onChange={handleChangeSchedule}
-						value={schedule.time.end}
+						value={schedule.time[0].end}
 						className='border ml-2'
 					/>
 				</label>

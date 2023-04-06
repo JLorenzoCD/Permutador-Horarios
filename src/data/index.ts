@@ -11,29 +11,45 @@ export const subjectsExample: ISubject[] = [
 			{
 				id: 1,
 				name: 'Comicion 1',
-				time: {
-					day: Days.THURSDAY,
-					start: '08:30',
-					end: '10:00',
-				},
+				time: [
+					{
+						day: Days.THURSDAY,
+						start: '08:30',
+						end: '10:00',
+					},
+					{
+						day: Days.SATURDAY,
+						start: '08:30',
+						end: '10:00',
+					},
+				],
 			},
 			{
 				id: 2,
 				name: 'Comicion 2',
-				time: {
-					day: Days.TUESDAY,
-					start: '13:30',
-					end: '15:00',
-				},
+				time: [
+					{
+						day: Days.TUESDAY,
+						start: '13:30',
+						end: '15:00',
+					},
+					{
+						day: Days.MONDAY,
+						start: '13:30',
+						end: '15:00',
+					},
+				],
 			},
 			{
 				id: 3,
 				name: 'Comicion 3',
-				time: {
-					day: Days.WEDNESDAY,
-					start: '13:30',
-					end: '15:00',
-				},
+				time: [
+					{
+						day: Days.WEDNESDAY,
+						start: '13:30',
+						end: '15:00',
+					},
+				],
 			},
 		],
 	},
@@ -44,20 +60,29 @@ export const subjectsExample: ISubject[] = [
 			{
 				id: 4,
 				name: 'Comicion 1',
-				time: {
-					day: Days.MONDAY,
-					start: '08:30',
-					end: '10:00',
-				},
+				time: [
+					{
+						day: Days.MONDAY,
+						start: '08:30',
+						end: '10:00',
+					},
+					{
+						day: Days.FRIDAY,
+						start: '10:30',
+						end: '12:00',
+					},
+				],
 			},
 			{
 				id: 5,
 				name: 'Comicion 2',
-				time: {
-					day: Days.MONDAY,
-					start: '13:30',
-					end: '15:00',
-				},
+				time: [
+					{
+						day: Days.MONDAY,
+						start: '13:30',
+						end: '15:00',
+					},
+				],
 			},
 		],
 	},
@@ -68,20 +93,29 @@ export const subjectsExample: ISubject[] = [
 			{
 				id: 6,
 				name: 'Comicion 1',
-				time: {
-					day: Days.MONDAY,
-					start: '10:30',
-					end: '12:00',
-				},
+				time: [
+					{
+						day: Days.MONDAY,
+						start: '10:30',
+						end: '12:00',
+					},
+					{
+						day: Days.WEDNESDAY,
+						start: '08:30',
+						end: '10:00',
+					},
+				],
 			},
 			{
 				id: 7,
 				name: 'Comicion 2',
-				time: {
-					day: Days.TUESDAY,
-					start: '11:00',
-					end: '13:30',
-				},
+				time: [
+					{
+						day: Days.TUESDAY,
+						start: '11:00',
+						end: '13:30',
+					},
+				],
 			},
 		],
 	},
@@ -96,9 +130,11 @@ export const defaultSubject: ISubject = {
 export const defaultSchedule: ISchedule = {
 	id: 0,
 	name: '',
-	time: {
-		day: Days.MONDAY,
-		start: '08:00',
-		end: '10:00',
-	},
+	time: [
+		{
+			day: Days.MONDAY,
+			start: '08:00',
+			end: '10:00',
+		},
+	],
 };
