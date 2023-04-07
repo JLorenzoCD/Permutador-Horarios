@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { defaultSchedule, defaultSubject } from '../../data';
+import { defaultSchedule, defaultSubject, defaultScheduleTime } from '../../data';
 import generateRandomColor from '../generateRandomColor';
 
 import type { ChangeEvent, FormEvent } from 'react';
@@ -17,15 +17,25 @@ function FromSubjects(subjects: ISubject[]) {
 	};
 
 	const handleChangeSchedule = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		if (e.target.name === 'name' || e.target.name === 'subjectId') {
+		setSchedule((prevState) => {
+			return { ...prevState, [e.target.name]: e.target.value };
+		});
+	};
+
+	const handleChangeScheduleTime = (timeId: number) => {
+		return (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 			setSchedule((prevState) => {
-				return { ...prevState, [e.target.name]: e.target.value };
+				const timeToChange = prevState.time.find((time) => time.id === timeId);
+
+				const times = prevState.time.filter((time) => time.id !== timeId);
+				if (timeToChange) {
+					const timeChanged = { ...timeToChange, [e.target.name]: e.target.value };
+
+					return { ...prevState, time: [timeChanged, ...times] };
+				}
+				return prevState;
 			});
-		} else {
-			setSchedule((prevState) => {
-				return { ...prevState, time: { ...prevState.time, [e.target.name]: e.target.value } };
-			});
-		}
+		};
 	};
 
 	const createSubject = (addSubject: (newSubject: ISubject) => void) => {
@@ -86,10 +96,27 @@ function FromSubjects(subjects: ISubject[]) {
 			};
 
 			addSchedule(Number(schedule.subjectId), newSchedule);
+			setSchedule({ ...JSON.parse(JSON.stringify(defaultSchedule)), subjectId: subjects[0].id ?? 0 });
 		};
 	};
 
-	return { subject, schedule, handleChangeSubject, handleChangeSchedule, createSubject, createSchedule };
+	const addTime = () => {
+		setSchedule((prevState) => {
+			const newTime = { ...defaultScheduleTime, id: prevState.time.length };
+			return { ...prevState, time: [...prevState.time, newTime] };
+		});
+	};
+
+	return {
+		subject,
+		schedule,
+		handleChangeSubject,
+		handleChangeSchedule,
+		handleChangeScheduleTime,
+		createSubject,
+		createSchedule,
+		addTime,
+	};
 }
 
 export default FromSubjects;

@@ -12,6 +12,7 @@ export interface ISchedule {
 }
 
 export interface ITimeSchedule {
+	id: number;
 	day: IDay;
 	start: string;
 	end: string;

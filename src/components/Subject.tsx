@@ -12,7 +12,7 @@ function Subject({ data }: Props) {
 					<li key={schedule.id}>
 						{schedule.name} -{' '}
 						{schedule.time.map((time) => (
-							<span className='ml-5'>
+							<span key={time.id} className='ml-5'>
 								{time.day} - {time.start} to {time.end}
 							</span>
 						))}

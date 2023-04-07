@@ -16,11 +16,13 @@ export const subjectsExample: ISubject[] = [
 						day: Days.THURSDAY,
 						start: '08:30',
 						end: '10:00',
+						id: 1,
 					},
 					{
 						day: Days.SATURDAY,
 						start: '08:30',
 						end: '10:00',
+						id: 2,
 					},
 				],
 			},
@@ -32,11 +34,13 @@ export const subjectsExample: ISubject[] = [
 						day: Days.TUESDAY,
 						start: '13:30',
 						end: '15:00',
+						id: 3,
 					},
 					{
 						day: Days.MONDAY,
 						start: '13:30',
 						end: '15:00',
+						id: 4,
 					},
 				],
 			},
@@ -48,6 +52,7 @@ export const subjectsExample: ISubject[] = [
 						day: Days.WEDNESDAY,
 						start: '13:30',
 						end: '15:00',
+						id: 5,
 					},
 				],
 			},
@@ -65,11 +70,13 @@ export const subjectsExample: ISubject[] = [
 						day: Days.MONDAY,
 						start: '08:30',
 						end: '10:00',
+						id: 6,
 					},
 					{
 						day: Days.FRIDAY,
 						start: '10:30',
 						end: '12:00',
+						id: 7,
 					},
 				],
 			},
@@ -81,6 +88,7 @@ export const subjectsExample: ISubject[] = [
 						day: Days.MONDAY,
 						start: '13:30',
 						end: '15:00',
+						id: 8,
 					},
 				],
 			},
@@ -98,11 +106,13 @@ export const subjectsExample: ISubject[] = [
 						day: Days.MONDAY,
 						start: '10:30',
 						end: '12:00',
+						id: 9,
 					},
 					{
 						day: Days.WEDNESDAY,
 						start: '08:30',
 						end: '10:00',
+						id: 10,
 					},
 				],
 			},
@@ -114,6 +124,7 @@ export const subjectsExample: ISubject[] = [
 						day: Days.TUESDAY,
 						start: '11:00',
 						end: '13:30',
+						id: 11,
 					},
 				],
 			},
@@ -127,14 +138,15 @@ export const defaultSubject: ISubject = {
 	possible_schedules: [],
 };
 
+export const defaultScheduleTime = {
+	day: Days.MONDAY,
+	start: '08:00',
+	end: '10:00',
+	id: 0,
+};
+
 export const defaultSchedule: ISchedule = {
 	id: 0,
 	name: '',
-	time: [
-		{
-			day: Days.MONDAY,
-			start: '08:00',
-			end: '10:00',
-		},
-	],
+	time: [{ ...defaultScheduleTime }],
 };

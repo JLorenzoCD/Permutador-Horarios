@@ -4,7 +4,7 @@ import Button from './Button';
 
 import FromSubjectsUtils from '../utils/components/FromSubjects';
 
-import type { ISchedule, ISubject } from '../types/Subject';
+import type { ISchedule, ISubject, ITimeSchedule } from '../types/Subject';
 
 interface Props {
 	subjects: ISubject[];
@@ -12,10 +12,17 @@ interface Props {
 	addSchedule: (subjectId: number, newSchedule: ISchedule) => void;
 }
 function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
-	const { subject, schedule, handleChangeSubject, handleChangeSchedule, createSubject, createSchedule } =
-		FromSubjectsUtils(subjects);
+	const {
+		subject,
+		schedule,
+		handleChangeSubject,
+		handleChangeSchedule,
+		handleChangeScheduleTime,
+		createSubject,
+		createSchedule,
+		addTime,
+	} = FromSubjectsUtils(subjects);
 
-	// ! Se coloco como por defecto el time[0], luego tengo que revisar y correguir para buscar una forma de que esten todos los time del array
 	return (
 		<div>
 			<form onSubmit={createSubject(addSubject)}>
@@ -69,42 +76,48 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 						onChange={handleChangeSchedule}
 					/>
 				</label>
-				<label className='block'>
-					Select day
-					<select name='day' value={schedule.time[0].day} onChange={handleChangeSchedule} className='border ml-2'>
-						<option value={Days.MONDAY}>{Days.MONDAY}</option>
-						<option value={Days.TUESDAY}>{Days.TUESDAY}</option>
-						<option value={Days.WEDNESDAY}>{Days.WEDNESDAY}</option>
-						<option value={Days.THURSDAY}>{Days.THURSDAY}</option>
-						<option value={Days.FRIDAY}>{Days.FRIDAY}</option>
-						<option value={Days.SATURDAY}>{Days.SATURDAY}</option>
-						<option value={Days.SUNDAY}>{Days.SUNDAY}</option>
-					</select>
-				</label>
-				<label className='block'>
-					Hora de comienzo
-					<input
-						type='time'
-						name='start'
-						onChange={handleChangeSchedule}
-						value={schedule.time[0].start}
-						className='border ml-2'
-					/>
-				</label>
-				<label className='block'>
-					Hora de finalizacion
-					<input
-						type='time'
-						name='end'
-						onChange={handleChangeSchedule}
-						value={schedule.time[0].end}
-						className='border ml-2'
-					/>
-				</label>
+				<Button type='button' color='purple' onClick={addTime}>
+					Añadir otro dia/hora
+				</Button>
+
+				{schedule.time.map((time) => (
+					<InputsScheduleTime key={time.id} time={time} handleChange={handleChangeScheduleTime(time.id)} />
+				))}
 
 				<Button type='submit'>Crear</Button>
 			</form>
 		</div>
+	);
+}
+
+interface PropsInputsScheduleTime {
+	time: ITimeSchedule;
+	handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+}
+function InputsScheduleTime({ time, handleChange }: PropsInputsScheduleTime) {
+	return (
+		<>
+			<label className='block mt-5'>
+				Select day
+				<select name='day' value={time.day} onChange={handleChange} className='border ml-2'>
+					<option value={Days.MONDAY}>{Days.MONDAY}</option>
+					<option value={Days.TUESDAY}>{Days.TUESDAY}</option>
+					<option value={Days.WEDNESDAY}>{Days.WEDNESDAY}</option>
+					<option value={Days.THURSDAY}>{Days.THURSDAY}</option>
+					<option value={Days.FRIDAY}>{Days.FRIDAY}</option>
+					<option value={Days.SATURDAY}>{Days.SATURDAY}</option>
+					<option value={Days.SUNDAY}>{Days.SUNDAY}</option>
+				</select>
+			</label>
+			<label className='block'>
+				Hora de comienzo
+				<input type='time' name='start' onChange={handleChange} value={time.start} className='border ml-2' />
+			</label>
+			<label className='block'>
+				Hora de finalizacion
+				<input type='time' name='end' onChange={handleChange} value={time.end} className='border ml-2' />
+			</label>
+		</>
 	);
 }
 
