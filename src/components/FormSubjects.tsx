@@ -21,6 +21,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 		createSubject,
 		createSchedule,
 		addTime,
+		deleteTime,
 	} = FromSubjectsUtils(subjects);
 
 	return (
@@ -51,41 +52,51 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 			</form>
 			<br />
 
-			<form onSubmit={createSchedule(addSchedule)}>
-				<h2 className='text-2xl'>Create new Schedule</h2>
+			{subjects.length !== 0 && (
+				<form onSubmit={createSchedule(addSchedule)}>
+					<h2 className='text-2xl'>Create new Schedule</h2>
 
-				<label className='block'>
-					Select Subject
-					<select name='subjectId' value={schedule.subjectId} onChange={handleChangeSchedule} className='border ml-2'>
-						{subjects &&
-							subjects.map((subject) => (
-								<option key={subject.id} value={subject.id}>
-									{subject.subject}
-								</option>
-							))}
-					</select>
-				</label>
+					<label className='block'>
+						Select Subject
+						<select name='subjectId' value={schedule.subjectId} onChange={handleChangeSchedule} className='border ml-2'>
+							<option value={-1}>Select...</option>
+							{subjects &&
+								subjects.map((subject) => (
+									<option key={subject.id} value={subject.id}>
+										{subject.subject}
+									</option>
+								))}
+						</select>
+					</label>
 
-				<label className='block'>
-					Schedule
-					<input
-						type='text'
-						name='name'
-						className='border ml-2'
-						value={schedule.name}
-						onChange={handleChangeSchedule}
-					/>
-				</label>
-				<Button type='button' color='purple' onClick={addTime}>
-					Añadir otro dia/hora
-				</Button>
+					<label className='block'>
+						Schedule
+						<input
+							type='text'
+							name='name'
+							className='border ml-2'
+							value={schedule.name}
+							onChange={handleChangeSchedule}
+						/>
+					</label>
+					<Button type='button' color='purple' onClick={addTime}>
+						Añadir otro dia/hora
+					</Button>
 
-				{schedule.time.map((time) => (
-					<InputsScheduleTime key={time.id} time={time} handleChange={handleChangeScheduleTime(time.id)} />
-				))}
+					<ul>
+						{schedule.time.map((time) => (
+							<InputsScheduleTime
+								key={time.id}
+								time={time}
+								handleChange={handleChangeScheduleTime(time.id)}
+								deleteTime={deleteTime}
+							/>
+						))}
+					</ul>
 
-				<Button type='submit'>Crear</Button>
-			</form>
+					<Button type='submit'>Crear</Button>
+				</form>
+			)}
 		</div>
 	);
 }
@@ -93,11 +104,15 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 interface PropsInputsScheduleTime {
 	time: ITimeSchedule;
 	handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+	deleteTime: (timeId: number) => void;
 }
-function InputsScheduleTime({ time, handleChange }: PropsInputsScheduleTime) {
+function InputsScheduleTime({ time, handleChange, deleteTime }: PropsInputsScheduleTime) {
 	return (
-		<>
-			<label className='block mt-5'>
+		<li className='ml-7 my-5'>
+			<Button type='button' color='red' onClick={() => deleteTime(time.id)} className='ml-auto'>
+				Delete
+			</Button>
+			<label className='block'>
 				Select day
 				<select name='day' value={time.day} onChange={handleChange} className='border ml-2'>
 					<option value={Days.MONDAY}>{Days.MONDAY}</option>
@@ -117,7 +132,7 @@ function InputsScheduleTime({ time, handleChange }: PropsInputsScheduleTime) {
 				Hora de finalizacion
 				<input type='time' name='end' onChange={handleChange} value={time.end} className='border ml-2' />
 			</label>
-		</>
+		</li>
 	);
 }
 

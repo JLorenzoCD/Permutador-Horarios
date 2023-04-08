@@ -8,7 +8,7 @@ import { ISchedule, ISubject } from '../../types/Subject';
 
 function FromSubjects(subjects: ISubject[]) {
 	const [subject, setSubject] = useState({ ...defaultSubject, hexColor: generateRandomColor() });
-	const [schedule, setSchedule] = useState({ ...defaultSchedule, subjectId: subjects[0].id ?? 0 });
+	const [schedule, setSchedule] = useState({ ...defaultSchedule, subjectId: subjects[0]?.id ?? -1 });
 
 	const handleChangeSubject = (e: ChangeEvent<HTMLInputElement>) => {
 		setSubject((prevState) => {
@@ -107,6 +107,13 @@ function FromSubjects(subjects: ISubject[]) {
 		});
 	};
 
+	const deleteTime = (timeId: number) => {
+		setSchedule((prevState) => {
+			const times = [...prevState.time.filter((time) => time.id !== timeId)];
+			return { ...prevState, time: [...times] };
+		});
+	};
+
 	return {
 		subject,
 		schedule,
@@ -116,6 +123,7 @@ function FromSubjects(subjects: ISubject[]) {
 		createSubject,
 		createSchedule,
 		addTime,
+		deleteTime,
 	};
 }
 
