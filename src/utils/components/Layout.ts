@@ -46,7 +46,22 @@ function Layout() {
 		});
 	};
 
-	return { subjects, possibleSchedules, createPossibleSchedules, clearPossibleSchedules, addSubject, addSchedule };
+	const deleteSubject = (subjectId: number) => {
+		setSubjects((prevState) => {
+			const filteredSubjects = prevState.filter((subject) => subject.id !== subjectId);
+			return [...filteredSubjects];
+		});
+	};
+
+	return {
+		subjects,
+		possibleSchedules,
+		createPossibleSchedules,
+		clearPossibleSchedules,
+		addSubject,
+		addSchedule,
+		deleteSubject,
+	};
 }
 
 export default Layout;

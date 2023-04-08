@@ -1,12 +1,19 @@
 import { ISubject } from '../types/Subject';
+import Button from './Button';
 
 interface Props {
 	data: ISubject;
+	deleteSubject: (subjectId: number) => void;
 }
-function Subject({ data }: Props) {
+function Subject({ data, deleteSubject }: Props) {
 	return (
 		<li className='mb-5'>
-			<h3 className='text-2xl'>{data.subject}</h3>
+			<div className='flex justify-between flex-1'>
+				<h3 className='text-2xl'>{data.subject}</h3>
+				<Button type='button' color='red' onClick={() => deleteSubject(data.id)}>
+					Delete
+				</Button>
+			</div>
 			<ul>
 				{data.possible_schedules.map((schedule) => (
 					<li key={schedule.id}>

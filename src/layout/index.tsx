@@ -7,8 +7,15 @@ import PossibleSchedules from '../components/PossibleSchedules';
 import FormSubjects from '../components/FormSubjects';
 
 function Layout() {
-	const { subjects, possibleSchedules, createPossibleSchedules, clearPossibleSchedules, addSubject, addSchedule } =
-		LayoutUtils();
+	const {
+		subjects,
+		possibleSchedules,
+		createPossibleSchedules,
+		clearPossibleSchedules,
+		addSubject,
+		addSchedule,
+		deleteSubject,
+	} = LayoutUtils();
 
 	return (
 		<Container>
@@ -24,7 +31,7 @@ function Layout() {
 						<h2 className='text-3xl font-bold'>Tus materias y sus posibles horarios:</h2>
 						<ul>
 							{subjects.map((subject) => (
-								<Subject data={subject} key={subject.id} />
+								<Subject data={subject} deleteSubject={deleteSubject} key={subject.id} />
 							))}
 						</ul>
 					</>
