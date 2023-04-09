@@ -13,7 +13,16 @@ function Layout() {
 	const createPossibleSchedules = () => {
 		setPossibleSchedules(null);
 
-		if (!!subjects) {
+		let areSchedule = false;
+
+		for (const subject of subjects) {
+			if (subject.possible_schedules.length !== 0) {
+				areSchedule = true;
+				break;
+			}
+		}
+
+		if (!!subjects && subjects.length !== 0 && areSchedule) {
 			const horarios = new GenerateSchedules(subjects);
 
 			setPossibleSchedules(horarios);
