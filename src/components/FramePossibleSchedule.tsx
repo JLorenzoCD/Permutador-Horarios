@@ -1,12 +1,12 @@
 import { ISubject } from '../types/Subject';
 import { IPossibleSchedule } from '../utils/GenerateSchedules';
 
-interface PropsSchedule {
+interface PropsFramePossibleSchedule {
 	data: IPossibleSchedule;
 	hoursArr: string[];
 	subjects: ISubject[];
 }
-function Schedule({ data, hoursArr, subjects }: PropsSchedule) {
+function FramePossibleSchedule({ data, hoursArr, subjects }: PropsFramePossibleSchedule) {
 	const dia = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 	const coloringSubject = (e: number | string) => {
@@ -27,7 +27,7 @@ function Schedule({ data, hoursArr, subjects }: PropsSchedule) {
 
 	return (
 		<>
-			<ScheduleBase hoursArr={hoursArr}>
+			<FramePossibleScheduleBase hoursArr={hoursArr}>
 				<ul className='flex'>
 					{data.map((day, index) => (
 						<li key={dia[index]} className='flex-1 border-r-2'>
@@ -49,16 +49,16 @@ function Schedule({ data, hoursArr, subjects }: PropsSchedule) {
 						</li>
 					))}
 				</ul>
-			</ScheduleBase>
+			</FramePossibleScheduleBase>
 		</>
 	);
 }
 
-interface PropsScheduleBase {
+interface PropsFramePossibleScheduleBase {
 	children: JSX.Element | JSX.Element[];
 	hoursArr: string[];
 }
-function ScheduleBase({ children, hoursArr }: PropsScheduleBase) {
+function FramePossibleScheduleBase({ children, hoursArr }: PropsFramePossibleScheduleBase) {
 	return (
 		<section className='overflow-x-auto mb-10'>
 			<div className='flex border-2 mx-2' style={{ width: 900 }}>
@@ -78,4 +78,4 @@ function ScheduleBase({ children, hoursArr }: PropsScheduleBase) {
 	);
 }
 
-export default Schedule;
+export default FramePossibleSchedule;

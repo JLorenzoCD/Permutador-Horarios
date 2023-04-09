@@ -1,6 +1,6 @@
 import generateRandomColor from '../utils/generateRandomColor';
 import GenerateSchedules, { IPossibleSchedule } from '../utils/GenerateSchedules';
-import Schedule from './Schedule';
+import FramePossibleSchedule from './FramePossibleSchedule';
 
 interface Props {
 	data: GenerateSchedules;
@@ -32,7 +32,7 @@ function PossibleSchedules({ data }: Props) {
 						{allPossibleSchedules.length} possible schedules have been generated
 					</h2>
 					{allPossibleSchedules.map((possibleSchedule, i) => (
-						<Schedule data={possibleSchedule} key={i} hoursArr={hoursArr} subjects={subjects} />
+						<FramePossibleSchedule data={possibleSchedule} key={i} hoursArr={hoursArr} subjects={subjects} />
 					))}
 				</>
 			) : (
