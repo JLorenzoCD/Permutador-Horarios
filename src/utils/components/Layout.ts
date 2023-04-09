@@ -53,6 +53,22 @@ function Layout() {
 		});
 	};
 
+	const deleteSchedule = (subjectId: number, scheduleId: number) => {
+		setSubjects((prevState) => {
+			const subjectSave = prevState.find((subject) => subject.id === subjectId);
+
+			if (!subjectSave) {
+				return prevState;
+			}
+
+			const newPossibleSchedules = subjectSave.possible_schedules.filter((schedule) => schedule.id !== scheduleId);
+
+			subjectSave.possible_schedules = newPossibleSchedules;
+
+			return [...prevState];
+		});
+	};
+
 	return {
 		subjects,
 		possibleSchedules,
@@ -61,6 +77,7 @@ function Layout() {
 		addSubject,
 		addSchedule,
 		deleteSubject,
+		deleteSchedule,
 	};
 }
 

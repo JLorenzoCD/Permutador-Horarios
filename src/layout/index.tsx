@@ -15,6 +15,7 @@ function Layout() {
 		addSubject,
 		addSchedule,
 		deleteSubject,
+		deleteSchedule,
 	} = LayoutUtils();
 
 	return (
@@ -31,7 +32,12 @@ function Layout() {
 						<h2 className='text-3xl font-bold'>Tus materias y sus posibles horarios:</h2>
 						<ul>
 							{subjects.map((subject) => (
-								<Subject data={subject} deleteSubject={deleteSubject} key={subject.id} />
+								<Subject
+									data={subject}
+									deleteSubject={deleteSubject}
+									deleteSchedule={deleteSchedule}
+									key={subject.id}
+								/>
 							))}
 						</ul>
 					</>
