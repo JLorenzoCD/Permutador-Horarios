@@ -1,14 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { subjectsExample } from './../../data';
 import GenerateSchedules from '../../utils/GenerateSchedules';
 
 import { ISchedule, ISubject } from '../../types/Subject';
+import { KEY_LOCAL_SOTRAGE_SUBJECTS } from '../../config';
 
 function Layout() {
-	const [subjects, setSubjects] = useState([...subjectsExample]);
+	const [subjects, setSubjects] = useState<ISubject[]>([]);
 
 	const [possibleSchedules, setPossibleSchedules] = useState<null | GenerateSchedules>(null);
+
+	useEffect(() => {
+		const jsonSubjectsData = window.localStorage.getItem(KEY_LOCAL_SOTRAGE_SUBJECTS);
+		if (jsonSubjectsData != null) {
+			const subjectsData = JSON.parse(jsonSubjectsData) as ISubject[];
+
+			setSubjects(subjectsData);
+		} else {
+			// * Tata por defecto (Solo en desarrollo)
+			setSubjects([...subjectsExample]);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (subjects.length === 0) return window.localStorage.removeItem(KEY_LOCAL_SOTRAGE_SUBJECTS);
+		window.localStorage.setItem(KEY_LOCAL_SOTRAGE_SUBJECTS, JSON.stringify(subjects));
+	}, [subjects]);
 
 	const createPossibleSchedules = () => {
 		setPossibleSchedules(null);
