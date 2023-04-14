@@ -1,3 +1,5 @@
+import type { IDay } from '../utils/Days';
+
 export interface ISubject {
 	id: number;
 	subject: string;
@@ -17,5 +19,3 @@ export interface ITimeSchedule {
 	start: string;
 	end: string;
 }
-
-export type IDay = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
