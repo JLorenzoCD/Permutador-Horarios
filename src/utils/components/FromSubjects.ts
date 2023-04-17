@@ -5,6 +5,7 @@ import generateRandomColor from '../generateRandomColor';
 
 import type { ChangeEvent, FormEvent } from 'react';
 import { ISchedule, ISubject } from '../../types/Subject';
+import MyNotifications from '../MyNotifications';
 
 function FromSubjects(subjects: ISubject[]) {
 	const [subject, setSubject] = useState({ ...defaultSubject, hexColor: generateRandomColor() });
@@ -43,14 +44,14 @@ function FromSubjects(subjects: ISubject[]) {
 			e.preventDefault();
 
 			if (subject.subject.trim() === '') {
-				alert('No es posible una materia sin nombre');
+				MyNotifications.error('No es posible una materia sin nombre');
 				return;
 			}
 			const nombreOcupado = subjects.some(
 				(subjectSave) => subjectSave.subject.trim().toUpperCase() === subject.subject.trim().toUpperCase()
 			);
 			if (nombreOcupado) {
-				alert('No es posible repetir el mismo nombre para una materia');
+				MyNotifications.error('No es posible repetir el mismo nombre para una materia');
 				return;
 			}
 			const newSubject = {
@@ -70,18 +71,19 @@ function FromSubjects(subjects: ISubject[]) {
 			e.preventDefault();
 
 			if (schedule.subjectId === -1) {
-				alert('No se a seleccionado una materia');
+				MyNotifications.error('Para crear una comision, es necesario seleccionar una materia');
 				return;
 			}
+
 			if (schedule.name.trim() === '') {
-				alert('No es posible una materia sin nombre');
+				MyNotifications.error('No es posible una materia sin nombre');
 				return;
 			}
 
 			const subjectSave = subjects.find((subject) => subject.id === Number(schedule.subjectId));
 
 			if (!subjectSave) {
-				alert('Error al buscar en materias');
+				MyNotifications.error('Error al buscar en materias');
 				return;
 			}
 
@@ -89,7 +91,7 @@ function FromSubjects(subjects: ISubject[]) {
 				(scheduleSave) => scheduleSave.name.trim().toUpperCase() === schedule.name.trim().toUpperCase()
 			);
 			if (nombreOcupado) {
-				alert('No es posible repetir el mismo nombre para un orario en la misma materia');
+				MyNotifications.error('No es posible repetir el mismo nombre para un orario en la misma materia');
 				return;
 			}
 
