@@ -69,6 +69,10 @@ function FromSubjects(subjects: ISubject[]) {
 		return (e: FormEvent<HTMLFormElement>) => {
 			e.preventDefault();
 
+			if (schedule.subjectId === -1) {
+				alert('No se a seleccionado una materia');
+				return;
+			}
 			if (schedule.name.trim() === '') {
 				alert('No es posible una materia sin nombre');
 				return;

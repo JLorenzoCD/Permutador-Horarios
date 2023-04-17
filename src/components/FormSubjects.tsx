@@ -59,7 +59,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 					<label className='block'>
 						Select Subject
 						<select name='subjectId' value={schedule.subjectId} onChange={handleChangeSchedule} className='border ml-2'>
-							<option value={-1}>Select...</option>
+							<option value='-1'>Select...</option>
 							{subjects &&
 								subjects.map((subject) => (
 									<option key={subject.id} value={subject.id}>
@@ -69,7 +69,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 						</select>
 					</label>
 
-					<label className='block'>
+					<label className='block mb-1'>
 						Schedule
 						<input
 							type='text'
