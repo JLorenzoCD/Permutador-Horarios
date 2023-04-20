@@ -54,6 +54,8 @@ function Layout() {
 
 	const addSubject = (newSubject: ISubject) => {
 		setSubjects((prevState) => [...prevState, newSubject]);
+
+		MyNotifications.success();
 	};
 
 	const addSchedule = (subjectId: number, newSchedule: ISchedule) => {
@@ -72,6 +74,8 @@ function Layout() {
 
 			return [...prevState];
 		});
+
+		MyNotifications.success();
 	};
 
 	const deleteSubject = async (subjectId: number) => {

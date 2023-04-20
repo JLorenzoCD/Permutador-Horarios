@@ -28,6 +28,16 @@ class MyNotifications {
 	static successToDelete(successDeleteText: string = 'The item has been removed.') {
 		Swal.fire('Deleted!', successDeleteText, 'success');
 	}
+
+	static success(successText: string = 'it has been successful!') {
+		Swal.fire({
+			position: 'top',
+			icon: 'success',
+			title: successText,
+			showConfirmButton: false,
+			timer: 1000,
+		});
+	}
 }
 
 export default MyNotifications;
