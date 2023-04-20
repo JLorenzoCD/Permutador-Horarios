@@ -5,6 +5,7 @@ import GenerateSchedules from '../../utils/GenerateSchedules';
 
 import { ISchedule, ISubject } from '../../types/Subject';
 import { KEY_LOCAL_SOTRAGE_SUBJECTS } from '../../config';
+import MyNotifications from '../MyNotifications';
 
 function Layout() {
 	const [subjects, setSubjects] = useState<ISubject[]>([]);
@@ -73,11 +74,16 @@ function Layout() {
 		});
 	};
 
-	const deleteSubject = (subjectId: number) => {
-		setSubjects((prevState) => {
-			const filteredSubjects = prevState.filter((subject) => subject.id !== subjectId);
-			return [...filteredSubjects];
-		});
+	const deleteSubject = async (subjectId: number) => {
+		const isConfirmed = await MyNotifications.confirmDelete();
+
+		if (isConfirmed) {
+			setSubjects((prevState) => {
+				const filteredSubjects = prevState.filter((subject) => subject.id !== subjectId);
+				return [...filteredSubjects];
+			});
+			MyNotifications.successToDelete('The subject was eliminated');
+		}
 	};
 
 	const deleteSchedule = (subjectId: number, scheduleId: number) => {

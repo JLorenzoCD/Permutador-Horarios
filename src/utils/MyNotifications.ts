@@ -10,6 +10,24 @@ class MyNotifications {
 			timer: 3000,
 		});
 	}
+
+	static async confirmDelete() {
+		const result = await Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: `Yes, delete it!`,
+		});
+
+		return result.isConfirmed;
+	}
+
+	static successToDelete(successDeleteText: string = 'The item has been removed.') {
+		Swal.fire('Deleted!', successDeleteText, 'success');
+	}
 }
 
 export default MyNotifications;
