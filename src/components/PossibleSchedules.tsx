@@ -11,6 +11,7 @@ function PossibleSchedules({ data }: Props) {
 	try {
 		allPossibleSchedules = data.getAllPossibleSchedules();
 	} catch (err) {
+		console.error(err);
 		return (
 			<>
 				<p>Error: {(err as Error).message}</p>

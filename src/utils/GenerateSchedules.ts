@@ -147,7 +147,7 @@ export default class GenerateSchedules {
 				const { row, columStart, columEnd } = timeOfSchedule;
 
 				for (let i = columStart; i <= columEnd; i++) {
-					copyScheduleMatrix[row][i] = `${zeroMatter.id}-${schedule.id}`;
+					if (copyScheduleMatrix[row]) copyScheduleMatrix[row][i] = `${zeroMatter.id}-${schedule.id}`;
 				}
 			});
 
@@ -231,12 +231,12 @@ export default class GenerateSchedules {
 
 				for (let i = columStart; i <= columEnd; i++) {
 					// Evitar que se sobre escriba parte del horario e invalidando el acutal scheduleMatrix
-					if (copyScheduleMatrix[row][i] !== -1) {
+					if (!copyScheduleMatrix[row] || (copyScheduleMatrix[row] && copyScheduleMatrix[row][i] !== -1)) {
 						copyScheduleMatrix = [];
 						copySubjects = [];
 						break;
 					}
-					copyScheduleMatrix[row][i] = `${subject.id}-${schedule.id}`;
+					if (copyScheduleMatrix[row]) copyScheduleMatrix[row][i] = `${subject.id}-${schedule.id}`;
 				}
 			});
 
