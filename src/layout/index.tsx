@@ -16,12 +16,16 @@ function Layout() {
 		addSchedule,
 		deleteSubject,
 		deleteSchedule,
+		setDefaultSubjects,
 	} = LayoutUtils();
 
 	return (
 		<Container>
 			<header>
 				<h1 className='text-3xl font-bold underline'>Aplicacion horarios</h1>
+				<Button onClick={setDefaultSubjects} className='mt-2'>
+					Default State
+				</Button>
 			</header>
 
 			<main>

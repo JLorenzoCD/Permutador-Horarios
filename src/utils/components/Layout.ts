@@ -103,6 +103,10 @@ function Layout() {
 		});
 	};
 
+	const setDefaultSubjects = () => {
+		setSubjects([...subjectsExample]);
+	};
+
 	return {
 		subjects,
 		possibleSchedules,
@@ -112,6 +116,7 @@ function Layout() {
 		addSchedule,
 		deleteSubject,
 		deleteSchedule,
+		setDefaultSubjects,
 	};
 }
 
