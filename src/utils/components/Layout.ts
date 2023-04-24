@@ -18,9 +18,6 @@ function Layout() {
 			const subjectsData = JSON.parse(jsonSubjectsData) as ISubject[];
 
 			setSubjects(subjectsData);
-		} else {
-			// * Tata por defecto (Solo en desarrollo)
-			setSubjects([...subjectsExample]);
 		}
 	}, []);
 
