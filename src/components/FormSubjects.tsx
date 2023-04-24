@@ -83,7 +83,7 @@ function FormSubjects({ subjects, addSubject, addSchedule }: Props) {
 						Añadir otro dia/hora
 					</Button>
 
-					<ul>
+					<ul className='flex flex-wrap'>
 						{schedule.time.map((time) => (
 							<InputsScheduleTime
 								key={time.id}
