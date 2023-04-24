@@ -9,7 +9,7 @@ import MyNotifications from '../MyNotifications';
 
 function FromSubjects(subjects: ISubject[]) {
 	const [subject, setSubject] = useState({ ...defaultSubject, hexColor: generateRandomColor() });
-	const [schedule, setSchedule] = useState({ ...defaultSchedule, subjectId: subjects[0]?.id ?? -1 });
+	const [schedule, setSchedule] = useState({ ...defaultSchedule, subjectId: -1 });
 
 	const handleChangeSubject = (e: ChangeEvent<HTMLInputElement>) => {
 		setSubject((prevState) => {
@@ -28,11 +28,14 @@ function FromSubjects(subjects: ISubject[]) {
 			setSchedule((prevState) => {
 				const timeToChange = prevState.time.find((time) => time.id === timeId);
 
-				const times = prevState.time.filter((time) => time.id !== timeId);
-				if (timeToChange) {
+				const timesIndex = prevState.time.findIndex((time) => time.id === timeId);
+				if (timeToChange && timesIndex !== -1) {
 					const timeChanged = { ...timeToChange, [e.target.name]: e.target.value };
 
-					return { ...prevState, time: [timeChanged, ...times] };
+					const time = [...prevState.time];
+					time[timesIndex] = timeChanged;
+
+					return { ...prevState, time };
 				}
 				return prevState;
 			});
@@ -108,7 +111,7 @@ function FromSubjects(subjects: ISubject[]) {
 
 	const addTime = () => {
 		setSchedule((prevState) => {
-			const newTime = { ...defaultScheduleTime, id: prevState.time.length };
+			const newTime = { ...defaultScheduleTime, id: new Date().getTime() };
 			return { ...prevState, time: [...prevState.time, newTime] };
 		});
 	};
