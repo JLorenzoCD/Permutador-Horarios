@@ -284,6 +284,7 @@ export default class GenerateSchedules {
 
 		const date = new Date();
 		date.setHours(this.min, 0, 0);
+		date.setMinutes(date.getMinutes() - this.valueInMinutesPerColumn);
 
 		for (let i = 0; i < hoursArr.length; i++) {
 			const time = date.toLocaleTimeString().split(':');
