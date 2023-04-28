@@ -11,7 +11,7 @@ class MyNotifications {
 		});
 	}
 
-	static async confirmDelete() {
+	static async confirmDelete(callback: () => void, successDeleteText: string) {
 		const result = await Swal.fire({
 			title: 'Are you sure?',
 			text: "You won't be able to revert this!",
@@ -22,7 +22,10 @@ class MyNotifications {
 			confirmButtonText: `Yes, delete it!`,
 		});
 
-		return result.isConfirmed;
+		if (result.isConfirmed) {
+			callback();
+			this.successToDelete(successDeleteText);
+		}
 	}
 
 	static successToDelete(successDeleteText: string = 'The item has been removed.') {
