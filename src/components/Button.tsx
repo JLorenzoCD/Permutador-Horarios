@@ -2,9 +2,11 @@ import type { ButtonHTMLAttributes } from 'react';
 
 import { themeButton } from '../utils/components/Button';
 
+import type { IButtonTheme, IButtonColors } from '../types/Button';
+
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-	theme?: 'default' | 'outline';
-	color?: 'blue' | 'red' | 'purple' | 'yellow' | 'green' | 'light' | 'dark';
+	theme?: IButtonTheme;
+	color?: IButtonColors;
 }
 function Button({ className, theme = 'default', color = 'blue', ...props }: Props) {
 	let buttonStyles = 'font-bold py-2 px-4 rounded mr-2 mb-2';

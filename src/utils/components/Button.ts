@@ -1,4 +1,4 @@
-const themeButton = {
+export const themeButton = {
 	default: {
 		blue: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300',
 		red: 'focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300',
@@ -27,5 +27,3 @@ const themeButton = {
 		dark: 'text-gray-900 hover:text-white border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300',
 	},
 };
-
-export { themeButton };
