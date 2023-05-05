@@ -22,6 +22,8 @@ export default class GenerateSchedules {
 	numberOfColumns: number = 0;
 	scheduleMatrix: IMatrix;
 
+	allPossibleSchedules: IPossibleSchedule[] = [];
+
 	days = {
 		Monday: 0,
 		Tuesday: 1,
@@ -256,7 +258,7 @@ export default class GenerateSchedules {
 		const allPossibleSchedules = this.generateAllPossibleSchedules();
 
 		// Retornando una modificacion de allPossibleSchedules, en el cual sus elementos ya no son IMatrix, sino IPossibleSchedule
-		return allPossibleSchedules.map((scheduleMatrix) => {
+		this.allPossibleSchedules = allPossibleSchedules.map((scheduleMatrix) => {
 			let newPossibleSchedule: IPossibleSchedule = new Array(7);
 
 			// Rellenando el nuevo array

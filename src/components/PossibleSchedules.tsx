@@ -1,23 +1,48 @@
+import { useEffect, useState } from 'react';
+
 import generateRandomColor from '../utils/generateRandomColor';
 import GenerateSchedules, { IPossibleSchedule } from '../utils/GenerateSchedules';
 import FramePossibleSchedule from './FramePossibleSchedule';
+
+import Spinner from './Spinner';
 
 interface Props {
 	data: GenerateSchedules;
 }
 function PossibleSchedules({ data }: Props) {
-	let allPossibleSchedules: IPossibleSchedule[] | null = null;
+	const [allPossibleSchedules, setallPossibleSchedules] = useState<IPossibleSchedule[]>([]);
+	const [error, setError] = useState<string | undefined>();
+	const [loading, setLoading] = useState(true);
 
-	try {
-		allPossibleSchedules = data.getAllPossibleSchedules();
-	} catch (err) {
-		console.error(err);
+	useEffect(() => {
+		try {
+			(() => {
+				data.getAllPossibleSchedules();
+				setallPossibleSchedules(data.allPossibleSchedules);
+				setLoading(false);
+			})();
+		} catch (err) {
+			console.error(err);
+			setError((err as Error).message);
+		}
+	}, []);
+
+	if (error) {
 		return (
 			<>
-				<p>Error: {(err as Error).message}</p>
+				<p>Error: {error}</p>
 			</>
 		);
 	}
+
+	if (loading) {
+		return (
+			<div className='mt-5'>
+				<Spinner />
+			</div>
+		);
+	}
+
 	const hoursArr = data.getTimeColumnInStringFormat();
 
 	const subjects = data.subjects.map((subject) => {
