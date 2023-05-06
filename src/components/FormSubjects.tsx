@@ -1,10 +1,9 @@
-import { Days } from '../utils/Days';
+import { Days } from '@/utils/Days';
+import FromSubjectsUtils from '@/utils/components/FromSubjects';
+
+import type { ISchedule, ISubject, ITimeSchedule } from '@/types/Subject';
 
 import Button from './Button';
-
-import FromSubjectsUtils from '../utils/components/FromSubjects';
-
-import type { ISchedule, ISubject, ITimeSchedule } from '../types/Subject';
 
 interface Props {
 	subjects: ISubject[];

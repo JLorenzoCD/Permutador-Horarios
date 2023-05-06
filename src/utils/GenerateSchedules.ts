@@ -1,4 +1,4 @@
-import type { ITimeSchedule, ISubject, ISchedule } from '../types/Subject';
+import type { ITimeSchedule, ISubject, ISchedule } from '@/types/Subject';
 import type { IDay } from './Days';
 
 export type IMatrix = (number | string)[][];

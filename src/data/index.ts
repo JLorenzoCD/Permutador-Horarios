@@ -1,6 +1,6 @@
-import type { ISchedule, ISubject } from '../types/Subject';
+import type { ISchedule, ISubject } from '@/types/Subject';
 
-import { Days } from '../utils/Days';
+import { Days } from '@/utils/Days';
 
 // Ejempolo basico sobre una pestaña con sus respectivas materias y horarios de cursado
 export const subjectsExample: ISubject[] = [

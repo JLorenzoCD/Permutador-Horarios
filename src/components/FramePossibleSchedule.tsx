@@ -1,5 +1,5 @@
-import { ISubject } from '../types/Subject';
-import { IPossibleSchedule } from '../utils/GenerateSchedules';
+import { ISubject } from '@/types/Subject';
+import { IPossibleSchedule } from '@/utils/GenerateSchedules';
 
 interface PropsFramePossibleSchedule {
 	data: IPossibleSchedule;

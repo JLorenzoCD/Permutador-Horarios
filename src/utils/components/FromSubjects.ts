@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { defaultSchedule, defaultSubject, defaultScheduleTime } from '../../data';
-import generateRandomColor from '../generateRandomColor';
+import { defaultSchedule, defaultSubject, defaultScheduleTime } from '@/data';
+
+import MyNotifications from '@/utils/MyNotifications';
+import generateRandomColor from '@/utils/generateRandomColor';
 
 import type { ChangeEvent, FormEvent } from 'react';
-import { ISchedule, ISubject } from '../../types/Subject';
-import MyNotifications from '../MyNotifications';
+import { ISchedule, ISubject } from '@/types/Subject';
 
 function FromSubjects(subjects: ISubject[]) {
 	const [subject, setSubject] = useState({ ...defaultSubject, hexColor: generateRandomColor() });

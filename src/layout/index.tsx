@@ -1,10 +1,10 @@
-import LayoutUtils from './../utils/components/Layout';
+import LayoutUtils from '@/utils/components/Layout';
 
-import Container from '../components/Container';
-import Button from '../components/Button';
-import Subject from '../components/Subject';
-import PossibleSchedules from '../components/PossibleSchedules';
-import FormSubjects from '../components/FormSubjects';
+import Container from '@/components/Container';
+import Button from '@/components/Button';
+import Subject from '@/components/Subject';
+import PossibleSchedules from '@/components/PossibleSchedules';
+import FormSubjects from '@/components/FormSubjects';
 
 function Layout() {
 	const {

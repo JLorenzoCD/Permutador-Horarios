@@ -1,4 +1,5 @@
-import { ISubject } from '../types/Subject';
+import { ISubject } from '@/types/Subject';
+
 import Button from './Button';
 
 interface Props {

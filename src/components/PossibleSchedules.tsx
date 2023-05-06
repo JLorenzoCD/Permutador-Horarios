@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import generateRandomColor from '../utils/generateRandomColor';
-import GenerateSchedules, { IPossibleSchedule } from '../utils/GenerateSchedules';
-import FramePossibleSchedule from './FramePossibleSchedule';
+import generateRandomColor from '@/utils/generateRandomColor';
+import GenerateSchedules, { IPossibleSchedule } from '@/utils/GenerateSchedules';
 
+import FramePossibleSchedule from './FramePossibleSchedule';
 import Spinner from './Spinner';
 
 interface Props {

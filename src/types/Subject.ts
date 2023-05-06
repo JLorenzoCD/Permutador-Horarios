@@ -1,4 +1,4 @@
-import type { IDay } from '../utils/Days';
+import type { IDay } from '@/utils/Days';
 
 export interface ISubject {
 	id: number;

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { subjectsExample } from './../../data';
-import GenerateSchedules from '../../utils/GenerateSchedules';
+import { KEY_LOCAL_SOTRAGE_SUBJECTS } from '@/config';
 
-import { ISchedule, ISubject } from '../../types/Subject';
-import { KEY_LOCAL_SOTRAGE_SUBJECTS } from '../../config';
-import MyNotifications from '../MyNotifications';
+import { subjectsExample } from '@/data';
+import GenerateSchedules from '@/utils/GenerateSchedules';
+import MyNotifications from '@/utils/MyNotifications';
+
+import { ISchedule, ISubject } from '@/types/Subject';
 
 function Layout() {
 	const [subjects, setSubjects] = useState<ISubject[]>([]);

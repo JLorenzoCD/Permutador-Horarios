@@ -1,8 +1,8 @@
 import type { ButtonHTMLAttributes } from 'react';
 
-import { themeButton } from '../utils/components/Button';
+import { themeButton } from '@/utils/components/Button';
 
-import type { IButtonTheme, IButtonColors } from '../types/Button';
+import type { IButtonTheme, IButtonColors } from '@/types/Button';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	theme?: IButtonTheme;
