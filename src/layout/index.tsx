@@ -31,7 +31,7 @@ function Layout() {
 			<main>
 				<FormSubjects subjects={subjects} addSchedule={addSchedule} addSubject={addSubject} />
 				<br />
-				{subjects && (
+				{subjects.length !== 0 && (
 					<>
 						<h2 className='text-3xl font-bold'>Tus materias y sus posibles horarios:</h2>
 						<ul>
@@ -44,16 +44,16 @@ function Layout() {
 								/>
 							))}
 						</ul>
+						<div className='mt-5'>
+							<Button type='button' color='green' onClick={createPossibleSchedules}>
+								Generar horarios
+							</Button>
+							<Button type='button' theme='outline' color='purple' onClick={clearPossibleSchedules}>
+								Limpiar horarios
+							</Button>
+						</div>
 					</>
 				)}
-				<div className='mt-5'>
-					<Button type='button' color='green' onClick={createPossibleSchedules}>
-						Generar horarios
-					</Button>
-					<Button type='button' theme='outline' color='purple' onClick={clearPossibleSchedules}>
-						Limpiar horarios
-					</Button>
-				</div>
 
 				<section>
 					{possibleSchedules && (

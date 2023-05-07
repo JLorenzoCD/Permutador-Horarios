@@ -134,6 +134,8 @@ export default class GenerateSchedules {
 
 		if (subjects.length === 0) {
 			throw new Error('There is no subject');
+		} else if (subjects.length === 1) {
+			throw new Error('A minimum of 2 subjects is needed to generate the possible schedules');
 		}
 
 		const zeroMatter = subjects.shift() as ISubject;
